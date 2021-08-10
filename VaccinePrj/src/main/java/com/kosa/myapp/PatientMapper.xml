@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosa.myapp.IPatientRepository">
+
+<!--
+<select id="getPtList" resultType="com.kosa.myapp.PatientVO">
+	select name as name,
+		   birth_date as birthDate,
+		   phone_num as phoneNum,
+		   gender as gender,
+		   rot_num as rotNum,
+		   first_dose as firstDose,
+		   second_dose as secondDose
+</select>
+  -->
+
+<select id="getPatientCount" parameterType="string" resultType="int">
+	select count(*) from patient
+</select>
+
+<select id="selectInfo" parameterType="string" resultType="com.kosa.myapp.PatientVO" >
+	select 
+		name as name,
+		birth_date as birthDate,
+	    phone_num as phoneNum,
+   	    gender as gender,
+	    rot_num as rotNum,
+	    first_dose as firstDose,
+	    second_dose as secondDose
+    from patient where rot_num = #{rotNum}
+</select>
+
+<select id="getPatientCount" resultType="int">
+   select count(*) from patient
+</select>
+
+<select id="selectVacInfo" parameterType="string" resultType="com.kosa.myapp.VacVO" >
+   select
+      vac_type as vacType,
+      prod_date as prodDate,
+      producer as producer,
+      rot_num as rot_num   
+   from vaccination where rot_num = #{rotNum}
+</select>
+
+<insert id="insertPt" parameterType="com.kosa.myapp.PatientVO">
+	insert into patient(name, birth_date, phone_num, gender, rot_num, first_dose, second_dose)
+	values(#{name}, #{birthDate}, #{phoneNum}, #{gender}, #{rotNum}, #{firstDose}, #{secondDose})
+</insert>
+
+<update id="updatePt" parameterType="com.kosa.myapp.PatientVO">
+	update patient
+	set 
+		name=#{name},
+		birth_date= #{birthDate},
+		phone_num = #{phoneNum},
+		gender= #{gender},	
+		first_dose= #{firstDose}, 
+		second_dose= #{secondDose}
+	where rot_num= #{rotNum}
+</update>
+
+<delete id="deletePt" parameterType="hashmap">
+	delete from patient where rot_num=#{rotNum} and phone_num=#{phoneNum}
+</delete>
+
+
+
+
+
+
+</mapper>

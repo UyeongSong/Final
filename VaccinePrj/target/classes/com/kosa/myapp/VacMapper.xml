@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosa.myapp.IVacRepository">
+
+<!--
+<select id="getPtList" resultType="com.kosa.myapp.PatientVO">
+	select name as name,
+		   birth_date as birthDate,
+		   phone_num as phoneNum,
+		   gender as gender,
+		   rot_num as rotNum,
+		   first_dose as firstDose,
+		   second_dose as secondDose
+</select>
+  -->
+
+<select id="selectVacInfo" parameterType="string" resultType="com.kosa.myapp.VacVO" >
+	select
+		vac_type as vacType,
+		prod_date as prodDate,
+		producer as producer,
+		rot_num as rot_num	
+	from vaccination where rot_num = #{rotNum}
+</select>
+
+<insert id="insertVacInfo" parameterType="com.kosa.myapp.VacVO">
+	insert into vaccination(vac_type, prod_date, producer, rot_num)
+	values(#{vacType}, #{prodDate}, #{producer}, #{rotNum})
+</insert>
+
+
+
+<delete id="deleteVacInfo" parameterType="com.kosa.myapp.VacVO">
+	delete from patient where rot_num=#{rotNum}
+</delete>
+
+
+</mapper>
